@@ -196,7 +196,7 @@ Profiles:
       Capabilities:
         <<: *OrdererCapabilities
     Consortiums:
-      CertificationConsortium:
+      PharmaConsortium:
         Organizations:
           - *manufacturer
           - *distributor
