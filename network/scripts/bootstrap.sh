@@ -14,7 +14,7 @@ DELAY="$2"
 LANGUAGE="$3"
 TIMEOUT="$4"
 VERBOSE="$5"
-: ${CHANNEL_NAME:="certificationchannel"}
+: ${CHANNEL_NAME:="pharmachannel"}
 : ${DELAY:="5"}
 : ${LANGUAGE:="node"}
 : ${TIMEOUT:="15"}
@@ -22,7 +22,7 @@ VERBOSE="$5"
 LANGUAGE=$(echo "$LANGUAGE" | tr [:upper:] [:lower:])
 COUNTER=1
 MAX_RETRY=15
-ORGS="iit mhrd upgrad"
+ORGS="manufacturer distributor retailer consumer transporter"
 
 if [ "$LANGUAGE" = "node" ]; then
   CC_SRC_PATH="/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/"
@@ -37,12 +37,12 @@ createChannel() {
   setGlobals 0 'iit'
   if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
     set -x
-    peer channel create -o orderer.certification-network.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx >&log.txt
+    peer channel create -o orderer.pharma-network.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx >&log.txt
     res=$?
     set +x
   else
     set -x
-    peer channel create -o orderer.certification-network.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt
+    peer channel create -o orderer.pharma-network.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt
     res=$?
     set +x
   fi
@@ -57,9 +57,18 @@ joinChannel() {
   for org in $ORGS; do
     for peer in 0 1; do
       joinChannelWithRetry $peer $org
-      echo "===================== peer${peer}.${org}.certification-network.com  joined channel '$CHANNEL_NAME' ===================== "
+      echo "===================== peer${peer}.${org}.pharma-network.com  joined channel '$CHANNEL_NAME' ===================== "
       sleep $DELAY
       echo
+    done
+  done
+}
+
+updateChannel() {
+  for org in $ORGS; do
+    for peer in 0; do
+      echo "Updating anchor peers for "${org}"..."
+      updateAnchorPeers 0  ${org}
     done
   done
 }
@@ -72,13 +81,9 @@ createChannel
 echo "Having all peers join the channel..."
 joinChannel
 
-## Set the anchor peers for each org in the channel
-echo "Updating anchor peers for IIT..."
-updateAnchorPeers 0 'iit'
-echo "Updating anchor peers for MHRD..."
-updateAnchorPeers 0 'mhrd'
-echo "Updating anchor peers for UpGrad..."
-updateAnchorPeers 0 'upgrad'
+## Join all the peers to the channel
+echo "Having all peer0 update the channel..."
+updateChannel
 
 echo
 echo "========= All GOOD, Hyperledger Fabric Certification Network Is Now Up and Running! =========== "

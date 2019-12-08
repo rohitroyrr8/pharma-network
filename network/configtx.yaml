@@ -205,7 +205,7 @@ Profiles:
           - *transporter
 
 
-  PharmaChannel:
+  pharmachannel:
     Consortium: PharmaConsortium
     Application:
       <<: *ApplicationDefaults

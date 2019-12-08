@@ -16,7 +16,7 @@ function printHelp() {
   echo "      - 'install' - install a specific version of chaincode"
   echo "      - 'update' - update chaincode to a new version"
   echo "      - 'generate' - generate required certificates and genesis block"
-  echo "    -c <channel name> - channel name to use (defaults to \"PharmaChannel\")"
+  echo "    -c <channel name> - channel name to use (defaults to \"pharmachannel\")"
   echo "    -t <timeout> - CLI timeout duration in seconds (defaults to 20)"
   echo "    -d <delay> - delay duration in seconds (defaults to 20)"
   echo "    -f <docker-compose-file> - specify which docker-compose file use (defaults to docker-compose-e2e.yaml)"
@@ -29,11 +29,11 @@ function printHelp() {
   echo "Typically, one would first generate the required certificates and "
   echo "genesis block, then bring up the network. e.g.:"
   echo
-  echo "	fabricNetwork.sh generate -c PharmaChannel"
-  echo "	fabricNetwork up -c PharmaChannel -s couchdb"
-  echo "        fabricNetwork up -c PharmaChannel -s couchdb -i 1.4.0"
+  echo "	fabricNetwork.sh generate -c pharmachannel"
+  echo "	fabricNetwork up -c pharmachannel -s couchdb"
+  echo "        fabricNetwork up -c pharmachannel -s couchdb -i 1.4.0"
   echo "	fabricNetwork up -l node"
-  echo "	fabricNetwork down -c PharmaChannel"
+  echo "	fabricNetwork down -c pharmachannel"
   echo
   echo "Taking all defaults:"
   echo "	fabricNetwork generate"
@@ -176,7 +176,7 @@ function networkDown() {
   if [ "$MODE" != "restart" ]; then
     # Bring down the network, deleting the volumes
     #Delete any ledger backups
-    docker run -v "$PWD":/tmp/PharmaChannel --rm hyperledger/fabric-tools:"$IMAGETAG" rm -Rf /tmp/PharmaChannel/ledgers-backup
+    docker run -v "$PWD":/tmp/pharmachannel --rm hyperledger/fabric-tools:"$IMAGETAG" rm -Rf /tmp/pharmachannel/ledgers-backup
     #Cleanup the chaincode containers
     clearContainers
     #Cleanup images
@@ -284,7 +284,7 @@ function generateChannelArtifacts() {
   echo "### Generating channel configuration transaction 'channel.tx' ###"
   echo "#################################################################"
   set -x
-  configtxgen -profile PharmaChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID "$CHANNEL_NAME"
+  configtxgen -profile pharmachannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID "$CHANNEL_NAME"
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -297,7 +297,7 @@ function generateChannelArtifacts() {
   echo "#######    Generating anchor peer update for manufacturerMSP   ##########"
   echo "#################################################################"
   set -x
-  configtxgen -profile PharmaChannel -outputAnchorPeersUpdate ./channel-artifacts/manufacturerMSPanchors.tx -channelID "$CHANNEL_NAME" -asOrg manufacturerMSP
+  configtxgen -profile pharmachannel -outputAnchorPeersUpdate ./channel-artifacts/manufacturerMSPanchors.tx -channelID "$CHANNEL_NAME" -asOrg manufacturerMSP
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -310,7 +310,7 @@ function generateChannelArtifacts() {
   echo "#######    Generating anchor peer update for distributorMSP   ##########"
   echo "#################################################################"
   set -x
-  configtxgen -profile PharmaChannel -outputAnchorPeersUpdate ./channel-artifacts/distributorMSPanchors.tx -channelID "$CHANNEL_NAME" -asOrg distributorMSP
+  configtxgen -profile pharmachannel -outputAnchorPeersUpdate ./channel-artifacts/distributorMSPanchors.tx -channelID "$CHANNEL_NAME" -asOrg distributorMSP
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -324,7 +324,7 @@ function generateChannelArtifacts() {
   echo "#######    Generating anchor peer update for retailerMSP   ##########"
   echo "#################################################################"
   set -x
-  configtxgen -profile PharmaChannel -outputAnchorPeersUpdate ./channel-artifacts/retailerMSPanchors.tx -channelID "$CHANNEL_NAME" -asOrg retailerMSP
+  configtxgen -profile pharmachannel -outputAnchorPeersUpdate ./channel-artifacts/retailerMSPanchors.tx -channelID "$CHANNEL_NAME" -asOrg retailerMSP
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -338,7 +338,7 @@ function generateChannelArtifacts() {
   echo "#######    Generating anchor peer update for consumerMSP   ##########"
   echo "#################################################################"
   set -x
-  configtxgen -profile PharmaChannel -outputAnchorPeersUpdate ./channel-artifacts/consumerMSPanchors.tx -channelID "$CHANNEL_NAME" -asOrg consumerMSP
+  configtxgen -profile pharmachannel -outputAnchorPeersUpdate ./channel-artifacts/consumerMSPanchors.tx -channelID "$CHANNEL_NAME" -asOrg consumerMSP
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -352,7 +352,7 @@ function generateChannelArtifacts() {
   echo "#######    Generating anchor peer update for transporterMSP   ##########"
   echo "#################################################################"
   set -x
-  configtxgen -profile PharmaChannel -outputAnchorPeersUpdate ./channel-artifacts/transporterMSPanchors.tx -channelID "$CHANNEL_NAME" -asOrg transporterMSP
+  configtxgen -profile pharmachannel -outputAnchorPeersUpdate ./channel-artifacts/transporterMSPanchors.tx -channelID "$CHANNEL_NAME" -asOrg transporterMSP
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -368,8 +368,8 @@ function generateChannelArtifacts() {
 CLI_TIMEOUT=15
 # default for delay between commands
 CLI_DELAY=5
-# channel name defaults to "PharmaChannel"
-CHANNEL_NAME="PharmaChannel"
+# channel name defaults to "pharmachannel"
+CHANNEL_NAME="pharmachannel"
 # version for updating chaincode
 VERSION_NO=1.1
 # type of chaincode to be installed
