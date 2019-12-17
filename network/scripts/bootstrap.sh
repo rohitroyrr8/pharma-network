@@ -7,7 +7,7 @@ echo "\___ \    | |     / _ \   | |_) |   | |  "
 echo " ___) |   | |    / ___ \  |  _ <    | |  "
 echo "|____/    |_|   /_/   \_\ |_| \_\   |_|  "
 echo
-echo "Setting Up Hyperledger Fabric Network"
+echo "Setting Up Hyperledger Fabric Pharma Network"
 echo
 CHANNEL_NAME="$1"
 DELAY="$2"
@@ -86,7 +86,7 @@ echo "Having all peer0 update the channel..."
 updateChannel
 
 echo
-echo "========= All GOOD, Hyperledger Fabric Certification Network Is Now Up and Running! =========== "
+echo "========= All GOOD, Hyperledger Fabric Pharma Network Is Now Up and Running! =========== "
 echo
 
 echo

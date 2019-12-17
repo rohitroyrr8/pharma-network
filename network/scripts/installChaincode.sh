@@ -7,7 +7,7 @@ echo "\___ \    | |     / _ \   | |_) |   | |  "
 echo " ___) |   | |    / ___ \  |  _ <    | |  "
 echo "|____/    |_|   /_/   \_\ |_| \_\   |_|  "
 echo
-echo "Deploying Chaincode PHARMANET On Certification Network"
+echo "Deploying Chaincode PHARMANET On Pharma Network"
 echo
 CHANNEL_NAME="$1"
 DELAY="$2"
@@ -52,7 +52,7 @@ echo "Instantiating chaincode on channel using peer0.manufacturer.pharma-network
 instantiateChaincode 0 'manufacturer' $VERSION
 
 echo
-echo "========= All GOOD, Chaincode PHARMANET Is Now Installed & Instantiated On Certification Network =========== "
+echo "========= All GOOD, Chaincode PHARMANET Is Now Installed & Instantiated On Pharma Network =========== "
 echo
 
 echo
