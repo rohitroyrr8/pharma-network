@@ -5,15 +5,20 @@ const port = 3000;
 
 // Import all function modules
 const addToWallet = require('./1_addToWallet');
-const createStudent = require('./2_createStudent');
-const issueCertificate = require('./4_issueCertificate');
-const verifyCertificate = require('./5_verifyCertificate');
+const registerCompany = require('./2_registerCompany');
+const addDrug = require('./3_addDrug');
+const createPO = require('./4_createPO');
+const createShipment = require('./5_createShipment');
+const updateShipment = require('./6_updateShipment');
+const retailDrug = require('./7_retailDrug');
+const viewHistory = require('./8_viewHistory');
+const viewDrugCurrentState = require('./9_viewDrugCurrentState');
 
 // Define Express app settings
 app.use(cors());
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.set('title', 'Certification App');
+app.set('title', 'Pharma Network App');
 
 app.get('/', (req, res) => res.send('hello world'));
 
@@ -100,4 +105,4 @@ app.post('/verifyCertificate', (req, res) => {
 			});
 });
 
-app.listen(port, () => console.log(`Distributed Certification App listening on port ${port}!`));
+app.listen(port, () => console.log(`Distributed Pharma Network App listening on port ${port}!`));

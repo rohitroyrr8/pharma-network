@@ -17,7 +17,7 @@ const path = require('path'); // Support library to build filesystem paths in No
 const crypto_materials = path.resolve(__dirname, '../network/crypto-config'); // Directory where all Network artifacts are stored
 
 // A wallet is a filesystem path that stores a collection of Identities
-const wallet = new FileSystemWallet('./identity/mhrd');
+const wallet = new FileSystemWallet('./identity/manufacturer');
 
 async function main(certificatePath, privateKeyPath) {
 
@@ -30,8 +30,8 @@ async function main(certificatePath, privateKeyPath) {
 		const privatekey = fs.readFileSync(privateKeyPath).toString();
 
 		// Load credentials into wallet
-		const identityLabel = 'MHRD_ADMIN';
-		const identity = X509WalletMixin.createIdentity('mhrdMSP', certificate, privatekey);
+		const identityLabel = 'MANUFACTURER_ADMIN';
+		const identity = X509WalletMixin.createIdentity('manufacturerMSP', certificate, privatekey);
 
 		await wallet.import(identityLabel, identity);
 
@@ -42,7 +42,7 @@ async function main(certificatePath, privateKeyPath) {
 	}
 }
 
-main('/home/byteprojects/workspace/certification-network/network/crypto-config/peerOrganizations/mhrd.certification-network.com/users/Admin@mhrd.certification-network.com/msp/signcerts/Admin@mhrd.certification-network.com-cert.pem', '/home/byteprojects/workspace/certification-network/network/crypto-config/peerOrganizations/mhrd.certification-network.com/users/Admin@mhrd.certification-network.com/msp/keystore/e612b046f748d647e28edd37743c0bad77a59986fa623779c58b06c432dba2f1_sk').then(() => {
+main('/home/byteprojects/workspace/pharma-network/network/crypto-config/peerOrganizations/manufacturer.pharma-network.com/users/Admin@manufacturer.pharma-network.com/msp/signcerts/Admin@manufacturer.pharma-network.com-cert.pem', '/home/byteprojects/workspace/pharma-network/network/crypto-config/peerOrganizations/manufacturer.pharma-network.com/users/Admin@manufacturer.pharma-network.com/msp/keystore/dd6fafd7cb3392a28df629105877101565ba2c1c3b5fffa940fb6e312df3a8f3_sk').then(() => {
   console.log('User identity added to wallet.');
 });
 
